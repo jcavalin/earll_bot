@@ -1,6 +1,5 @@
 import traceback
-
-from services.SpeechToText import SpeechToText
+from services.Speech import Speech
 
 
 class Replier:
@@ -13,26 +12,33 @@ class Replier:
         print(f'Handling text: {text}')
 
         try:
-            response = self.commands.responses(text, self.replier(update))
-        except Exception as e:
-            print(f'Error: {e.__str__()} -> {traceback.format_exc()}')
-            response = "Error! 😔"
+            # response = self.commands.responses(text, self.replier(update))
+            speech = Speech()
+            response = speech.to_voice(text)
 
-        update.message.reply_text(response)
+            update.message.reply_voice(
+                voice=open(response['path'], 'rb'),
+                reply_to_message_id=update.message.message_id,
+                duration=response['duration']
+            )
+
+            speech.get_temp_file().delete_tmp_files()
+        except Exception as e:
+            response = self.handle_error(e)
+            update.message.reply_text(response, reply_to_message_id=update.message.message_id)
 
     def handle_voice(self, update, context):
         voice = update.message.voice
-        print(f'Handling voice')
+        print('Handling voice')
 
         try:
-            speech_to_text = SpeechToText()
-            result = speech_to_text.recognize(voice)
+            speech = Speech()
+            result = speech.to_text(voice)
             response = result.text
         except Exception as e:
-            print(f'Error: {e.__str__()} -> {traceback.format_exc()}')
-            response = "Error! 😔"
+            response = self.handle_error(e)
 
-        update.message.reply_text(response)
+        update.message.reply_text(response, reply_to_message_id=update.message.message_id)
 
     @staticmethod
     def replier(update):
@@ -40,3 +46,8 @@ class Replier:
             update.message.reply_text(text=text)
 
         return reply_message
+
+    @staticmethod
+    def handle_error(e):
+        print(f'Error: {e.__str__()} -> {traceback.format_exc()}')
+        return "Error! 😔"
