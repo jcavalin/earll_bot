@@ -13,7 +13,8 @@ commands = Commands()
 replier = Replier(commands)
 
 dispatcher = updater.dispatcher
-dispatcher.add_handler(MessageHandler(Filters.text, replier.handle))
+dispatcher.add_handler(MessageHandler(Filters.text, replier.handle_text))
+dispatcher.add_handler(MessageHandler(Filters.voice, replier.handle_voice))
 
 updater.start_polling()
 print('Started!')
