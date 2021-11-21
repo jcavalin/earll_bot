@@ -22,6 +22,8 @@ class TempFile:
 
     def delete_tmp_files(self):
         for file in self.tmp_files_created:
+            if not os.path.exists(file):
+                continue
             os.remove(file)
 
     def create_tmp_dir(self):

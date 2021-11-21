@@ -11,32 +11,35 @@ class Replier:
         text = str(update.message.text)
         print(f'Handling text: {text}')
 
+        speech = Speech()
         try:
             # response = self.commands.responses(text, self.replier(update))
-            speech = Speech()
             response = speech.to_voice(text)
 
-            update.message.reply_voice(
-                voice=open(response['path'], 'rb'),
-                reply_to_message_id=update.message.message_id,
-                duration=response['duration']
-            )
+            with open(response['path'], 'rb') as file:
+                update.message.reply_voice(
+                    voice=file,
+                    reply_to_message_id=update.message.message_id,
+                    duration=response['duration']
+                )
 
             speech.get_temp_file().delete_tmp_files()
         except Exception as e:
             response = self.handle_error(e)
+            speech.get_temp_file().delete_tmp_files()
             update.message.reply_text(response, reply_to_message_id=update.message.message_id)
 
     def handle_voice(self, update, context):
         voice = update.message.voice
         print('Handling voice')
 
+        speech = Speech()
         try:
-            speech = Speech()
             result = speech.to_text(voice)
             response = result.text
         except Exception as e:
             response = self.handle_error(e)
+            speech.get_temp_file().delete_tmp_files()
 
         update.message.reply_text(response, reply_to_message_id=update.message.message_id)
 
