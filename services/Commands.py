@@ -8,5 +8,5 @@ class Commands:
     def responses(self, text, reply):
         input_text = str(text).lower()
 
-        return 'olá'
+        return 'Hi!'
 

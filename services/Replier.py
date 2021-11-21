@@ -1,19 +1,17 @@
 import traceback
+
+from services.Commands import Commands
 from services.Speech import Speech
 
 
 class Replier:
 
-    def __init__(self, commands):
-        self.commands = commands
-
     def handle_text(self, update, context):
         text = str(update.message.text)
-        print(f'Handling text: {text}')
+        print('Handling text')
 
         speech = Speech()
         try:
-            # response = self.commands.responses(text, self.replier(update))
             response = speech.to_voice(text)
 
             with open(response['path'], 'rb') as file:
@@ -42,6 +40,18 @@ class Replier:
             speech.get_temp_file().delete_tmp_files()
 
         update.message.reply_text(response, reply_to_message_id=update.message.message_id)
+
+    def handle_command(self, update, context):
+        text = str(update.message.text)
+        print(f'Handling command: {text}')
+
+        try:
+            commands = Commands()
+            response = commands.responses(text, self.replier(update))
+        except Exception as e:
+            response = self.handle_error(e)
+
+        update.message.reply_text(response)
 
     @staticmethod
     def replier(update):
