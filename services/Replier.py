@@ -2,6 +2,7 @@ import traceback
 
 from services.Commands import Commands
 from services.Speech import Speech
+from services.Vision import Vision
 
 
 class Replier:
@@ -52,6 +53,19 @@ class Replier:
             response = self.handle_error(e)
 
         update.message.reply_text(response)
+
+    def handle_image(self, update, context):
+        image = update.message.photo
+        print('Handling image')
+
+        vision = Vision()
+        try:
+            result = vision.to_text(image[-1])
+            response = result.text
+        except Exception as e:
+            response = self.handle_error(e)
+
+        update.message.reply_text(response, reply_to_message_id=update.message.message_id)
 
     @staticmethod
     def replier(update):

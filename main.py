@@ -11,6 +11,7 @@ replier = Replier()
 
 updater.dispatcher.add_handler(MessageHandler(Filters.command, replier.handle_command))
 updater.dispatcher.add_handler(MessageHandler(Filters.text, replier.handle_text))
+updater.dispatcher.add_handler(MessageHandler(Filters.photo, replier.handle_image))
 updater.dispatcher.add_handler(MessageHandler(Filters.voice, replier.handle_voice))
 
 updater.start_polling()
