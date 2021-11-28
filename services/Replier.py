@@ -1,6 +1,7 @@
 import traceback
 
 from services.Command import Command
+from services.Locale import Locale
 from services.Speech import Speech
 from services.Vision import Vision
 
@@ -88,4 +89,4 @@ class Replier:
     @staticmethod
     def handle_error(e):
         print(f'Error: {e.__str__()} -> {traceback.format_exc()}')
-        return "Error! 😔"
+        return Locale.get('error')

@@ -1,14 +1,38 @@
+from services.Locale import Locale
+
+
 class Command:
     def __init__(self):
         self.origin = None
         self.state = None
 
     def responses(self, text, reply):
-        input_text = str(text).lower()
+        input_text = text.split(' ')
+        command = str(input_text[0]).lower()
+        arg = ''
 
-        return "Hi! I'm Earll.\n\n" \
-               "I can help you to convert some kinds of messages.\n" \
-               "\t\t\t1. Send me a text and I will speak it to you.\n" \
-               "\t\t\t2. Send me audio and I will transcribe it for you.\n" \
-               "\t\t\t3. Send me a picture and I will describe it to you.\n"
+        if 0 <= 1 < len(input_text):
+            arg = input_text[1]
 
+        switch = {
+            '/language': self.set_language,
+            '/voice': self.set_voice
+        }
+
+        return switch.get(command, self.greetings)(arg)
+
+    @staticmethod
+    def greetings(arg=None):
+        return Locale.get('hi')
+
+    @staticmethod
+    def set_language(language=None):
+        if language not in Locale.supported_languages:
+            return Locale.get('supported_languages') + ', '.join(Locale.supported_languages)
+
+        Locale.load(language)
+        return Locale.get('done')
+
+    @staticmethod
+    def set_voice(voice=None):
+        return Locale.get('done')

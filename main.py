@@ -1,10 +1,14 @@
 import os
 from telegram.ext import *
 from dotenv import load_dotenv
+
+from services.Locale import Locale
 from services.Replier import Replier
 
 load_dotenv()
 print('Starting...')
+
+Locale().load()
 
 updater = Updater(os.getenv('TOKEN'))
 replier = Replier()
