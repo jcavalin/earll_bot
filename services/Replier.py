@@ -21,12 +21,11 @@ class Replier:
                     reply_to_message_id=update.message.message_id,
                     duration=response['duration']
                 )
-
-            speech.get_temp_file().delete_tmp_files()
         except Exception as e:
             response = self.handle_error(e)
-            speech.get_temp_file().delete_tmp_files()
             update.message.reply_text(response, reply_to_message_id=update.message.message_id)
+
+        speech.get_temp_file().delete_tmp_files()
 
     def handle_voice(self, update, context):
         voice = update.message.voice
@@ -59,13 +58,23 @@ class Replier:
         print('Handling image')
 
         vision = Vision()
+        speech = Speech()
         try:
             result = vision.to_text(image[-1])
-            response = result.text
+            voice = speech.to_voice(result.text)
+
+            with open(voice['path'], 'rb') as file:
+                update.message.reply_voice(
+                    voice=file,
+                    reply_to_message_id=update.message.message_id,
+                    duration=voice['duration'],
+                    caption=result.text
+                )
         except Exception as e:
             response = self.handle_error(e)
+            update.message.reply_text(response, reply_to_message_id=update.message.message_id)
 
-        update.message.reply_text(response, reply_to_message_id=update.message.message_id)
+        speech.get_temp_file().delete_tmp_files()
 
     @staticmethod
     def replier(update):

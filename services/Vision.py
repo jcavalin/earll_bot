@@ -1,4 +1,3 @@
-from services.TempFile import TempFile
 import os
 from azure.cognitiveservices.vision.computervision import ComputerVisionClient
 from msrest.authentication import CognitiveServicesCredentials
