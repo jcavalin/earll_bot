@@ -13,6 +13,7 @@ updater.dispatcher.add_handler(MessageHandler(Filters.command, replier.handle_co
 updater.dispatcher.add_handler(MessageHandler(Filters.text, replier.handle_text))
 updater.dispatcher.add_handler(MessageHandler(Filters.photo, replier.handle_image))
 updater.dispatcher.add_handler(MessageHandler(Filters.voice, replier.handle_voice))
+updater.dispatcher.add_handler(MessageHandler(Filters.sticker, replier.handle_sticker))
 
 updater.start_polling()
 print('Started!')

@@ -76,6 +76,26 @@ class Replier:
 
         speech.get_temp_file().delete_tmp_files()
 
+    def handle_sticker(self, update, context):
+        text = str(update.message.sticker.emoji)
+        print('Handling sticker')
+
+        speech = Speech()
+        try:
+            response = speech.to_voice(text)
+
+            with open(response['path'], 'rb') as file:
+                update.message.reply_voice(
+                    voice=file,
+                    reply_to_message_id=update.message.message_id,
+                    duration=response['duration']
+                )
+        except Exception as e:
+            response = self.handle_error(e)
+            update.message.reply_text(response, reply_to_message_id=update.message.message_id)
+
+        speech.get_temp_file().delete_tmp_files()
+
     @staticmethod
     def replier(update):
         def reply_message(text):
