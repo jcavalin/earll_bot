@@ -1,8 +1,8 @@
 hi: "Olá! Eu sou o Earll.\n\n
-    Eu posso lhe ajudar a converter alguns tipos de mensagens.
+    Eu posso lhe ajudar a converter alguns tipos de mensagens.\n
     \t\t\t1. Me envie um texto e eu irei falá-lo para você.\n
     \t\t\t2. Me envie um audio e eu irei transcrevê-lo para você.\n
-    \t\t\t2. Me envie uma imagem e eu irei descrevê-la para você.\n"
+    \t\t\t3. Me envie uma imagem e eu irei descrevê-la para você.\n"
 done: Feito!
 error: Erro! 😔
 supported_languages: 'Você deve escolher: '
