@@ -1,24 +1,37 @@
 import traceback
 
 from services.Command import Command
+from services.Db import Db
 from services.Locale import Locale
 from services.Speech import Speech
 from services.Vision import Vision
 
 
 class Replier:
+    user = None
+
+    def set_user(self, user):
+        db = Db()
+        self.user = db.get_user(user)
+        Locale().load(self.user['language'])
 
     def handle_text(self, update, context):
+        self.set_user(update.message.from_user.id)
+
         print('Handling text')
         text = str(update.message.text)
         self.reply_from_text(text, update)
 
     def handle_sticker(self, update, context):
+        self.set_user(update.message.from_user.id)
+
         print('Handling sticker')
         text = str(update.message.sticker.emoji)
         self.reply_from_text(text, update)
 
     def handle_voice(self, update, context):
+        self.set_user(update.message.from_user.id)
+
         print('Handling voice')
         voice = update.message.voice
 
@@ -33,6 +46,8 @@ class Replier:
         self.reply_text(update, response)
 
     def handle_image(self, update, context):
+        self.set_user(update.message.from_user.id)
+
         print('Handling image')
         image = update.message.photo
 
@@ -45,6 +60,8 @@ class Replier:
             self.reply_text(update, response)
 
     def handle_command(self, update, context):
+        self.set_user(update.message.from_user.id)
+
         print(f'Handling command')
         text = str(update.message.text)
 
