@@ -5,6 +5,7 @@ from src.services.Vision import Vision
 
 
 class Replier(AbsController):
+    # Text message handler
     def handle_text(self, update, context):
         self.app_start(update.message.from_user)
 
@@ -12,6 +13,7 @@ class Replier(AbsController):
         text = str(update.message.text)
         self.reply_from_text(text, update)
 
+    # Sticker message handler
     def handle_sticker(self, update, context):
         self.app_start(update.message.from_user)
 
@@ -19,6 +21,7 @@ class Replier(AbsController):
         text = str(update.message.sticker.emoji)
         self.reply_from_text(text, update)
 
+    # Voice message handler
     def handle_voice(self, update, context):
         self.app_start(update.message.from_user)
 
@@ -35,6 +38,7 @@ class Replier(AbsController):
 
         self.reply_text(update, response)
 
+    # Image message handler
     def handle_image(self, update, context):
         self.app_start(update.message.from_user)
 
@@ -49,6 +53,7 @@ class Replier(AbsController):
             response = self.handle_error(e)
             self.reply_text(update, response)
 
+    # Command message handler
     def handle_command(self, update, context):
         self.app_start(update.message.from_user)
 
@@ -64,6 +69,7 @@ class Replier(AbsController):
         if response:
             update.message.reply_text(response)
 
+    # Replies user with text and audio
     def reply_from_text(self, text, update, caption: str = None):
         speech = Speech(self.app.user['language'], self.app.user['voice'])
 
@@ -83,6 +89,7 @@ class Replier(AbsController):
 
         speech.get_temp_file().delete_tmp_files()
 
+    # Replies user
     @staticmethod
     def replier(update):
         def reply_markup(text, markup):
@@ -90,6 +97,7 @@ class Replier(AbsController):
 
         return reply_markup
 
+    # Replies a text
     @staticmethod
     def reply_text(update, text):
         update.message.reply_text(text=text, reply_to_message_id=update.message.message_id)

@@ -10,6 +10,7 @@ class Command:
         self.user = user
         self.db = db
 
+    # Return the response according to the command
     def responses(self, text, replier):
         self.replier = replier
         input_text = str(text).lower().split(' ')
@@ -27,10 +28,12 @@ class Command:
 
         return switch.get(command, self.greetings)(arg)
 
+    # Shows a greetings message
     @staticmethod
     def greetings(arg=None):
         return Locale.get('hi')
 
+    # Set language for the user
     def set_language(self, language):
         if language not in Locale.supported_languages:
             return Locale.get('must_choose') + ', '.join(Locale.supported_languages)
@@ -39,6 +42,7 @@ class Command:
         Locale.load(language)
         return Locale.get('done')
 
+    # Set voice for the user
     def set_voice(self, voice):
         voices = ['male', 'female']
 
@@ -48,6 +52,7 @@ class Command:
         self.db.set_voice(self.user['id'], voice)
         return Locale.get('done')
 
+    # Shows settings options
     def settings(self, args=None):
         keyboard = [[
             InlineKeyboardButton(Locale.get('language'), callback_data='set_language_options'),
@@ -62,6 +67,7 @@ class Command:
 
         self.replier(message_reply_text, reply_markup)
 
+    # Shows language options
     @staticmethod
     def language_options(replier):
         keyboard = [[
@@ -73,6 +79,7 @@ class Command:
 
         replier(text, reply_markup)
 
+    # Shows voice options
     @staticmethod
     def voice_options(replier):
         keyboard = [[

@@ -17,6 +17,7 @@ class Speech:
         self.speech_config.speech_recognition_language = Speech.get_language(language)
         self.speech_config.speech_synthesis_voice_name = Speech.get_voice(language, voice)
 
+    # Convert an audio to a text
     def to_text(self, voice):
         file_path = self.temp.download(voice)
         file_wav_path = self.temp.get_filepath(f'{voice.file_unique_id}.wav')
@@ -30,6 +31,7 @@ class Speech:
 
         return speech_recognizer.recognize_once_async().get()
 
+    # Convert a text to an audio
     def to_voice(self, text):
         filename = uuid.uuid4()
         file_wav_path = self.temp.get_filepath(f'{filename}.wav')
@@ -43,9 +45,11 @@ class Speech:
 
         return {'path': file_path, 'duration': duration}
 
+    # Return the temp file class util for the instance
     def get_temp_file(self):
         return self.temp
 
+    # Get the full language options
     @staticmethod
     def get_language(language):
         languages = {
@@ -55,6 +59,7 @@ class Speech:
 
         return languages.get(language, languages['en'])
 
+    # Get the full voice options
     @staticmethod
     def get_voice(language, voice):
         languages = {

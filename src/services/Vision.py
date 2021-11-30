@@ -11,6 +11,7 @@ class Vision:
             CognitiveServicesCredentials(os.getenv('VISION_KEY'))
         )
 
+    # Convert a picture to a text
     def to_text(self, image, language="es"):
         file = image.get_file()
         description = self.computervision_client.describe_image(file.file_path, language=language)

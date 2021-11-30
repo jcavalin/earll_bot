@@ -1,6 +1,7 @@
 from pydub import AudioSegment
 
 
+# Helper for audios
 class Audio:
 
     @staticmethod
