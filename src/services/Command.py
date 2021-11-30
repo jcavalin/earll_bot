@@ -1,4 +1,4 @@
-from services.Locale import Locale
+from src.utils.Locale import Locale
 
 
 class Command:

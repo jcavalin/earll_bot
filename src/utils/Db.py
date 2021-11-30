@@ -1,5 +1,4 @@
 import sqlite3
-from os.path import exists
 
 
 class Db:

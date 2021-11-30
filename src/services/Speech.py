@@ -1,5 +1,5 @@
-from services.Audio import Audio
-from services.TempFile import TempFile
+from src.utils.Audio import Audio
+from src.utils.TempFile import TempFile
 import os
 import uuid
 import azure.cognitiveservices.speech as speechsdk
