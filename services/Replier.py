@@ -9,10 +9,11 @@ from services.Vision import Vision
 
 class Replier:
     user = None
+    db = None
 
     def set_user(self, user):
-        db = Db()
-        self.user = db.get_user(user)
+        self.db = Db()
+        self.user = self.db.get_user(user)
         Locale().load(self.user['language'])
 
     def handle_text(self, update, context):
@@ -66,7 +67,7 @@ class Replier:
         text = str(update.message.text)
 
         try:
-            command = Command()
+            command = Command(user=self.user, db=self.db)
             response = command.responses(text, self.replier(update))
         except Exception as e:
             response = self.handle_error(e)

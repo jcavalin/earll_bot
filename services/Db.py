@@ -8,7 +8,7 @@ class Db:
 
     def get_user(self, user, create_user=True):
         cursor = self.connection.cursor()
-        cursor.execute("SELECT language, voice FROM user_settings WHERE id = ?", (user,))
+        cursor.execute("SELECT id, language, voice FROM user_settings WHERE id = ?", (user,))
         result = cursor.fetchone()
 
         if create_user and not result:
@@ -23,14 +23,14 @@ class Db:
 
     def set_language(self, user, language):
         self.connection.execute(
-            "UPDATE user_settings SET language = ? WHERE user = ?;",
+            "UPDATE user_settings SET language = ? WHERE id = ?;",
             (language, user)
         )
         self.connection.commit()
 
     def set_voice(self, user, voice):
         self.connection.execute(
-            "UPDATE user_settings SET voice = ? WHERE user = ?;",
+            "UPDATE user_settings SET voice = ? WHERE id = ?;",
             (voice, user)
         )
         self.connection.commit()

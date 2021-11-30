@@ -2,9 +2,9 @@ from services.Locale import Locale
 
 
 class Command:
-    def __init__(self):
-        self.origin = None
-        self.state = None
+    def __init__(self, user, db):
+        self.user = user
+        self.db = db
 
     def responses(self, text, reply):
         input_text = text.split(' ')
@@ -25,14 +25,14 @@ class Command:
     def greetings(arg=None):
         return Locale.get('hi')
 
-    @staticmethod
-    def set_language(language=None):
+    def set_language(self, language):
         if language not in Locale.supported_languages:
             return Locale.get('supported_languages') + ', '.join(Locale.supported_languages)
 
+        self.db.set_language(self.user['id'], language)
         Locale.load(language)
         return Locale.get('done')
 
-    @staticmethod
-    def set_voice(voice=None):
+    def set_voice(self, voice):
+        self.db.set_voice(self.user['id'], voice)
         return Locale.get('done')
