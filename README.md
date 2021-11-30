@@ -14,7 +14,7 @@ Earll uses [Azure Speech](https://azure.microsoft.com/en-us/services/cognitive-s
 
 ### How to run?
 1. Create an `.env` file at the root path, based in `.env.example`.
-   1. Create your own [Telegram Bot token](https://t.me/botfather).
+   1. Create your own [Telegram Bot](https://t.me/botfather) token.
    2. Create your own [Azure Speech](https://azure.microsoft.com/en-us/services/cognitive-services/speech-services/) credential.
    3. Create your own [Azure Computer Vision](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/) credential.
    4. Fill `.env` with your token and credentials.
