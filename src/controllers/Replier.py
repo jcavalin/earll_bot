@@ -13,25 +13,25 @@ class Replier:
 
     def set_user(self, user):
         self.db = Db()
-        self.user = self.db.get_user(user)
+        self.user = self.db.get_user(user.id)
         Locale().load(self.user['language'])
 
     def handle_text(self, update, context):
-        self.set_user(update.message.from_user.id)
+        self.set_user(update.message.from_user)
 
         print('Handling text')
         text = str(update.message.text)
         self.reply_from_text(text, update)
 
     def handle_sticker(self, update, context):
-        self.set_user(update.message.from_user.id)
+        self.set_user(update.message.from_user)
 
         print('Handling sticker')
         text = str(update.message.sticker.emoji)
         self.reply_from_text(text, update)
 
     def handle_voice(self, update, context):
-        self.set_user(update.message.from_user.id)
+        self.set_user(update.message.from_user)
 
         print('Handling voice')
         voice = update.message.voice
@@ -47,21 +47,21 @@ class Replier:
         self.reply_text(update, response)
 
     def handle_image(self, update, context):
-        self.set_user(update.message.from_user.id)
+        self.set_user(update.message.from_user)
 
         print('Handling image')
         image = update.message.photo
 
         vision = Vision()
         try:
-            result = vision.to_text(image[-1])
+            result = vision.to_text(image[-1], language=self.user['language'])
             self.reply_from_text(result.text, update, caption=result.text)
         except Exception as e:
             response = self.handle_error(e)
             self.reply_text(update, response)
 
     def handle_command(self, update, context):
-        self.set_user(update.message.from_user.id)
+        self.set_user(update.message.from_user)
 
         print(f'Handling command')
         text = str(update.message.text)
