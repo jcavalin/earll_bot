@@ -9,19 +9,19 @@ class Db:
         self.connection.row_factory = self.dict_factory
         self.create_tables()
 
-    def get_user(self, user, create_user=True):
+    def get_user(self, user, create_user=True, language='en'):
         cursor = self.connection.cursor()
         cursor.execute("SELECT id, language, voice FROM user_settings WHERE id = ?", (user,))
         result = cursor.fetchone()
 
         if create_user and not result:
-            self.create_user(user)
+            self.create_user(user, language=language)
             result = self.get_user(user, create_user=False)
 
         return result
 
-    def create_user(self, user):
-        self.connection.execute("INSERT INTO user_settings (id) VALUES (?);", (user,))
+    def create_user(self, user, language='en'):
+        self.connection.execute("INSERT INTO user_settings (id, language) VALUES (?, ?);", (user, language))
         self.connection.commit()
 
     def set_language(self, user, language):

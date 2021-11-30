@@ -7,8 +7,8 @@ class Command:
         self.db = db
 
     def responses(self, text, reply):
-        input_text = text.split(' ')
-        command = str(input_text[0]).lower()
+        input_text = str(text).lower().split(' ')
+        command = input_text[0]
         arg = ''
 
         if 0 <= 1 < len(input_text):

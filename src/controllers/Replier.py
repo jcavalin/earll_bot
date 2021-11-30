@@ -13,7 +13,7 @@ class Replier:
 
     def set_user(self, user):
         self.db = Db()
-        self.user = self.db.get_user(user.id)
+        self.user = self.db.get_user(user.id, language=user.language_code)
         Locale().load(self.user['language'])
 
     def handle_text(self, update, context):
