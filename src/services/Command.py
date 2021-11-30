@@ -50,15 +50,15 @@ class Command:
 
     def settings(self, args=None):
         keyboard = [[
-            InlineKeyboardButton("Language", callback_data='set_language_options'),
-            InlineKeyboardButton("Voice", callback_data='set_voice_options')
+            InlineKeyboardButton(Locale.get('language'), callback_data='set_language_options'),
+            InlineKeyboardButton(Locale.get('voice'), callback_data='set_voice_options')
         ]]
         reply_markup = InlineKeyboardMarkup(keyboard)
-        message_reply_text = 'Here are your current settings:\n' \
-                             + f"\tLanguage: {self.user['language']}\n" \
-                             + f"\tVoice: {self.user['voice']}\n" \
+        message_reply_text = Locale.get('current_settings') + ':\n' \
+                             + f"\t{Locale.get('language')}: {self.user['language']}\n" \
+                             + f"\t{Locale.get('voice')}: {self.user['voice']}\n" \
                              + '\n' \
-                             + 'What would you like to set up?'
+                             + Locale.get('setup_question')
 
         self.replier(message_reply_text, reply_markup)
 
@@ -69,17 +69,17 @@ class Command:
             InlineKeyboardButton("Português", callback_data='set_language_pt')
         ]]
         reply_markup = InlineKeyboardMarkup(keyboard)
-        text = 'What language would you like to change to?'
+        text = Locale.get('language_question')
 
         replier(text, reply_markup)
 
     @staticmethod
     def voice_options(replier):
         keyboard = [[
-            InlineKeyboardButton("Male", callback_data='set_voice_male'),
-            InlineKeyboardButton("Female", callback_data='set_voice_female')
+            InlineKeyboardButton(Locale.get('male'), callback_data='set_voice_male'),
+            InlineKeyboardButton(Locale.get('female'), callback_data='set_voice_female')
         ]]
         reply_markup = InlineKeyboardMarkup(keyboard)
-        text = 'What voice would you like to change to?'
+        text = Locale.get('voice_question')
 
         replier(text, reply_markup)

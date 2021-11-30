@@ -6,3 +6,11 @@ hi: "Hi! I'm Earll.\n\n
 done: Done!
 error: Error! 😔
 must_choose: 'You must choose: '
+language_question: What language would you like to change to?
+voice_question: What voice would you like to change to?
+male: Male
+female: Female
+setup_question: What would you like to set up?
+current_settings: Here are your current settings
+language: Language
+voice: Voice
