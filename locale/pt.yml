@@ -5,4 +5,4 @@ hi: "Olá! Eu sou o Earll.\n\n
     \t\t\t3. Me envie uma imagem e eu irei descrevê-la para você.\n"
 done: Feito!
 error: Erro! 😔
-supported_languages: 'Você deve escolher: '
+must_choose: 'Você deve escolher: '

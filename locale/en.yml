@@ -5,4 +5,4 @@ hi: "Hi! I'm Earll.\n\n
     \t\t\t3. Send me a picture and I will describe it to you.\n"
 done: Done!
 error: Error! 😔
-supported_languages: 'You must choose: '
+must_choose: 'You must choose: '

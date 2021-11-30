@@ -1,10 +1,14 @@
 import sqlite3
+from os.path import exists
 
 
 class Db:
+    DATABASE = 'earll.db'
+
     def __init__(self):
-        self.connection = sqlite3.connect('earll.db')
+        self.connection = sqlite3.connect(self.DATABASE)
         self.connection.row_factory = self.dict_factory
+        self.create_tables()
 
     def get_user(self, user, create_user=True):
         cursor = self.connection.cursor()
@@ -34,6 +38,20 @@ class Db:
             (voice, user)
         )
         self.connection.commit()
+
+    def create_tables(self):
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT * FROM sqlite_master WHERE type = 'table'")
+        if cursor.fetchone():
+            return True
+
+        cursor.execute("""
+            CREATE TABLE user_settings (
+                id integer not null primary key,
+                voice varchar(100) not null default 'female',
+                language varchar(100) not null default 'en'
+            );
+        """)
 
     @staticmethod
     def dict_factory(cursor, row):
