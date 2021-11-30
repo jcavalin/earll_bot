@@ -3,7 +3,7 @@ import yaml
 
 class Locale:
     localedir = './locale'
-    supported_languages = ['en-ES', 'pt-BR']
+    supported_languages = ['en', 'pt']
     texts = {}
 
     @staticmethod
