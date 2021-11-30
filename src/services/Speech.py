@@ -8,15 +8,14 @@ import azure.cognitiveservices.speech.audio as speechaudiosdk
 
 class Speech:
 
-    def __init__(self):
+    def __init__(self, language, voice):
         self.temp = TempFile()
         self.speech_config = speechsdk.SpeechConfig(
             subscription=os.getenv('SPEECH_KEY'),
             region=os.getenv('SPEECH_REGION')
         )
-        # self.speech_config.speech_synthesis_language = "en-US"
-        self.speech_config.speech_synthesis_voice_name = "en-US-JennyNeural"
-        # self.speech_config.speech_synthesis_voice_name = "en-US-EricNeural"
+        self.speech_config.speech_recognition_language = Speech.get_language(language)
+        self.speech_config.speech_synthesis_voice_name = Speech.get_voice(language, voice)
 
     def to_text(self, voice):
         file_path = self.temp.download(voice)
@@ -46,3 +45,23 @@ class Speech:
 
     def get_temp_file(self):
         return self.temp
+
+    @staticmethod
+    def get_language(language):
+        languages = {
+            'en': 'en-US',
+            'pt': 'pt-BR'
+        }
+
+        return languages.get(language, languages['en'])
+
+    @staticmethod
+    def get_voice(language, voice):
+        languages = {
+            'en_male': 'en-US-EricNeural',
+            'en_female': 'en-US-JennyNeural',
+            'pt_male': 'pt-BR-AntonioNeural',
+            'pt_female': 'pt-BR-FranciscaNeural'
+        }
+
+        return languages.get(f"{language}_{voice}", languages['en_female'])

@@ -36,7 +36,7 @@ class Replier:
         print('Handling voice')
         voice = update.message.voice
 
-        speech = Speech()
+        speech = Speech(self.user['language'], self.user['voice'])
         try:
             result = speech.to_text(voice)
             response = result.text
@@ -75,7 +75,7 @@ class Replier:
         update.message.reply_text(response)
 
     def reply_from_text(self, text, update, caption: str = None):
-        speech = Speech()
+        speech = Speech(self.user['language'], self.user['voice'])
 
         try:
             response = speech.to_voice(text)
