@@ -11,6 +11,9 @@ class Locale:
     @staticmethod
     def load(language=None):
         language = language or Locale.supported_languages[0]
+        
+        if language not in Locale.supported_languages:
+            language = Locale.supported_languages[0]
 
         with open(f"{Locale.localedir}/{language}.yml", "r") as stream:
             try:
