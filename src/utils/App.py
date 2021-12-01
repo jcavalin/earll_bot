@@ -11,5 +11,5 @@ class App:
     @staticmethod
     def start(user):
         App.db = Db()
-        App.user = App.db.get_user(user.id, language=user.language_code)
+        App.user = App.db.get_user(user.id)
         Locale().load(App.user['language'])
