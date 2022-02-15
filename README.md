@@ -10,8 +10,6 @@ Earll is a telegram bot that helps you with some kinds of messages:
 
 Earll uses [Azure Speech](https://azure.microsoft.com/en-us/services/cognitive-services/speech-services/) and [Azure Computer Vision](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/) services to do that.
 
-[Try it out!](https://telegram.me/earll_bot)
-
 ### How to run?
 1. Create an `.env` file in the root path, based in `.env.example`.
    1. Create your [Telegram Bot](https://t.me/botfather) token.
